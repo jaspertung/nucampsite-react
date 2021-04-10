@@ -1,0 +1,41 @@
+.btn { background-color:  #0096dc;}
+.socialbox a {color: #0096dc!important;}
+.tag{
+   /* font-weight: unset; */
+   text-shadow: unset;
+   background-color: unset;
+}
+#region-main div div.modified {
+	display: none;
+}
+
+div.firstpost.starter div.author {
+	// display: none;
+}
+
+.block_messageteacher ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.hidden-blocks .block-region .block .header {
+    border-style: solid;
+	border-width: 1px 1px 0 1px;
+}
+
+.block-region-front .block .header {
+    border-style: solid;
+	border-width: 1px 1px 0 1px;
+}
+
+.modal-container .modal .modal-header .close {
+	background: unset!important;
+	background-image: url(/theme/image.php/adaptable/theme/1514671966/sprite)!important;
+	box-shadow: 0 0 0 1px rgba(0,0,0,.25) inset, 0 2px 0 rgba(255,255,255,.3) inset, 0 1px 2px rgba(0,0,0,.15)!important;
+	opacity: 1!important;
+}
+
+div.availabilityinfo.isrestricted {
+	display: none;
+}
