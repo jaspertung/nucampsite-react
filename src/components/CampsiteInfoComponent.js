@@ -35,9 +35,11 @@ class CampsiteInfo extends Component {
     render() {
         return (
             (this.props.campsite ?
-            <div className="row">
-                {this.renderCampsite(this.props.campsite)}
-                {this.renderComments(this.props.campsite.comments)}
+            <div className="container">
+                <div className="row">
+                    {this.renderCampsite(this.props.campsite)}
+                    {this.renderComments(this.props.campsite.comments)}
+                </div>
             </div>
             :
             <div></div>)
