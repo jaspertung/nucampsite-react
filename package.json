@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "4.5.2",
     "bootstrap-social": "5.1.1",
+    "caniuse-lite": "^1.0.30001208",
     "font-awesome": "4.7.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
