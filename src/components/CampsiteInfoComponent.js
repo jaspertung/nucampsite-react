@@ -3,15 +3,25 @@ import { Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Button, 
 import { Control, LocalForm, Errors } from 'react-redux-form'
 import { Link } from 'react-router-dom'
 
+const required = val => val && val.length
+const maxLength = len => val => !val || (val.length <= len)
+const minLength = len => val => val && (val.length >= len)
+
 class CommentForm extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            isModalOpen: false
+            isModalOpen: false,
+            rating: ``,
+            author: ``,
+            comment: ``,
+            touched: {
+                rating: false,
+                author: false,
+                comment: false
+            }
         }
-        // this.toggleModal = this.toggleModal.bind(this)
-        // this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     toggleModal = () => {
@@ -47,16 +57,42 @@ class CommentForm extends Component {
                                 </Control.select>
                             </div>
                             <div className="form-group">
-                                <Label htmlFor="author">Author</Label>
-                                <Control.text model=".author" name="author" id="author" className="form-control">
-                                    
-                                </Control.text>
+                                <Label htmlFor="author">Your Name</Label>
+                                <Control.text model=".author" name="author" id="author" className="form-control" placeholder="Name"
+                                    validators={{
+                                        required,
+                                        minLength: minLength(2),
+                                        maxLength: maxLength(15)
+                                    }}
+                                />
+                                <Errors
+                                    className="text-danger" 
+                                    model=".author"
+                                    show="touched"
+                                    component="div"
+                                    messages={{
+                                        required: `Required`,
+                                        minLength: `Must be at least 2 characters`,
+                                        maxLength: `Must be 15 characters or less`
+                                    }}
+                                />
                             </div>
                             <div className="form-group">
                                 <Label htmlFor="comment">Comment</Label>
-                                <Control.textarea model=".comment" name="comment" id="comment" className="form-control">
-                                    
-                                </Control.textarea>
+                                <Control.textarea model=".comment" name="comment" id="comment" className="form-control"
+                                    validators={{
+                                        required
+                                    }}
+                                />  
+                                <Errors
+                                    className="text-danger" 
+                                    model=".comment"
+                                    show="touched"
+                                    component="div"
+                                    messages={{
+                                        required: `Required`,
+                                    }}
+                                />
                             </div>
                             <div className="form-group">
                                 <Button type="submit" color="primary">
