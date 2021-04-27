@@ -82,7 +82,7 @@ class Contact extends Component {
                                         validators={{
                                             required,
                                             minLength: minLength(2),
-                                            maxLength: maxLength(2)
+                                            maxLength: maxLength(15)
                                         }}
                                     />
                                     <Errors
@@ -107,7 +107,7 @@ class Contact extends Component {
                                         validators={{
                                             required,
                                             minLength: minLength(2),
-                                            maxLength: maxLength(2)
+                                            maxLength: maxLength(15)
                                         }}
                                     />
                                     <Errors
