@@ -1,11 +1,28 @@
 import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../shared/baseUrl'
 
-// comments (add and failed)
+// ------------ comments (add and failed)-----------------------------
 export const fetchComments = () => dispatch => {
     return fetch(baseUrl + 'comments')
+        .then(response => {
+                if(response.ok) {
+                    return response
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`)
+                    error.response = response
+                    throw error
+                    // if there is a response, but it's a bad status
+                }
+            },
+            error => {
+                const errMess= new Error(error.message)
+                throw errMess
+                // if no response
+            }
+        )
         .then(response =>response.json())
         .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)))
 }
 
 export const addComment = (campsiteId, rating, author, text) => ({
@@ -28,14 +45,32 @@ export const addComments = comments => ({
     payload: comments
 })
 
-// campsites (add, loading, failed)
+// ----------------- campsites (add, loading, failed) ------------------
 export const fetchCampsites = () => dispatch => {
     dispatch(campsitesLoading())
 
     return fetch(baseUrl + 'campsites')
+        .then(response => {
+                if(response.ok) {
+                    return response
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`)
+                    error.response = response
+                    throw error
+                    // if there is a response, but it's a bad status
+                }
+            },
+            error => {
+                const errMess= new Error(error.message)
+                throw errMess
+                // if no response
+            }
+        )
         .then(response => response.json())
         // converts response (array of campsites) from json to JS
         .then(campsites => dispatch(addCampsites(campsites)))
+        .catch(error => dispatch(campsitesFailed(error.message)))
+        // catches thrown errors
 }
 // uses thunk so can nest functions
 // was simulating server request with setTimeout
@@ -56,14 +91,31 @@ export const campsitesFailed = errMess => ({
 })
 // action that returns an error message
 
-// promotions (add, loading, failed)
+// ----------- promotions (add, loading, failed) ----------------------
 export const fetchPromotions = () => dispatch => {
     dispatch(promotionsLoading())
 
     return fetch(baseUrl + 'promotions')
+        .then(response => {
+                if(response.ok) {
+                    return response
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`)
+                    error.response = response
+                    throw error
+                    // if there is a response, but it's a bad status
+                }
+            },
+            error => {
+                const errMess= new Error(error.message)
+                throw errMess
+                // if no response
+            }
+        )
         .then(response => response.json())
         // converts response (array of campsites) from json to JS
         .then(promotions => dispatch(addPromotions(promotions)))
+        .catch(error => dispatch(promotionsFailed(error.message)))
 }
 
 export const addPromotions = promotions => ({
