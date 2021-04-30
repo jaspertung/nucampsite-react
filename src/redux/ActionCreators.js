@@ -25,16 +25,6 @@ export const fetchComments = () => dispatch => {
         .catch(error => dispatch(commentsFailed(error.message)))
 }
 
-export const addComment = (campsiteId, rating, author, text) => ({
-    type: ActionTypes.ADD_COMMENT,
-    payload: {
-        campsiteId: campsiteId,
-        rating: rating,
-        author: author,
-        text:  text
-    }
-})
-
 export const commentsFailed = errMess => ({
     type: ActionTypes.COMMENTS_FAILED,
     payload: errMess
@@ -44,6 +34,53 @@ export const addComments = comments => ({
     type: ActionTypes.ADD_COMMENTS,
     payload: comments
 })
+
+
+// ------------ new comment -----------------------------
+export const addComment = comment => ({
+    type: ActionTypes.ADD_COMMENT,
+    payload: comment
+})
+// update local Redux store
+
+export const postComment = (campsiteId, rating, author, text) => dispatch => {
+    const newComment = {
+        campsiteId: campsiteId,
+        rating: rating,
+        author: author,
+        text: text
+    }
+    newComment.date = new Date().toISOString()
+    // handle async call to Fetch and server using Thunk
+
+    return fetch(baseUrl + 'comments', { //optional 2nd argument in form of object
+            method: "POST", //default is GET
+            body: JSON.stringify(newComment), //JSON version of newComment object
+            headers: {
+                "Content-Type": "application/json" // lets server know to expect body formatted as json
+            }
+        })
+        .then(response => {
+                if(response.ok) {
+                    return response
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`)
+                    error.response = response
+                    throw error
+                    // if there is a response, but it's a bad status
+                }
+            },
+            error => { throw error } //throw error to next catch block if promise is rejected
+        )
+        .then(response => response.json())
+        .then(response => dispatch(addComment(response)))
+        // updates redux store
+        .catch(error => {
+            console.log('post comment', error.message)
+            alert('Your comment could not be posted\nError: ' + error.message)
+        })
+}
+
 
 // ----------------- campsites (add, loading, failed) ------------------
 export const fetchCampsites = () => dispatch => {
